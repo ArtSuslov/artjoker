@@ -1,18 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import TodaysForecast from './components/todaysForecast.js';
 import fiveDaysForecast from './components/fiveDaysForecast';
+import { connect } from 'react-redux';
+import { getTodaysForecast } from './actions/todaysForecastActions';
+import { getFiveDaysForecast } from './actions/fiveDaysForecastActions';
 
-function App() {
-  return (
-    <BrowserRouter>
-        <Switch>
-          <Route exact path='/' component={TodaysForecast} />
-          <Route path='/forecast5' component={fiveDaysForecast} />
-        </Switch>
-      </BrowserRouter>
-  );
+class App extends Component {
+  componentDidMount() {
+    this.props.getForecast();
+    this.props.getFiveDaysForecast();
+  }
+
+  render() {
+    const { 
+      isFetched: todaysForecastIsFetched, 
+      weather: todaysWeather 
+    } = this.props.todaysForecast;
+    return (
+      <div>
+        {todaysForecastIsFetched
+          ? <TodaysForecast weather={todaysWeather} /> 
+          : <h1>Wait</h1>}
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    todaysForecast: state.todaysForecast,
+    fiveDaysForecast: state.fiveDaysForecast,
+  }
+};
+const mapDispatchToProps = dispatch => {
+  return {
+      getForecast: () => dispatch(getTodaysForecast()),
+      getFiveDaysForecast: () => dispatch(getFiveDaysForecast()),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

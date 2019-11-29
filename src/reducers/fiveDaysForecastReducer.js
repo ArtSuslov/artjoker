@@ -1,7 +1,7 @@
 import { GET_FIVE_DAYS_FORECAST_REQUEST, GET_FIVE_DAYS_FORECAST_SUCCESS, GET_FIVE_DAYS_FORECAST_FAIL } from '../actions/fiveDaysForecastActions'
 
 const initialState = {
-  weather: {},
+  weather: [],
   isFetching: false,
   error: '',
 }
