@@ -1,13 +1,13 @@
 import React from 'react';
 import dayjs from 'dayjs';
 
-const TodaysForecast = props => {
+const WeatherCard = props => {
   const { dt, main, name, sys, weather, wind } = props.weather;
   const date = dayjs().isValid(dt)
     ? dt
     : "";
   return (
-    <div className='container box'>
+    <div>
       <div className='content-header'>
         <h2 className='header-city'>{name}, {sys.country}</h2>
         <p className='header-date'>
@@ -21,4 +21,4 @@ const TodaysForecast = props => {
   );
 }
 
-export default TodaysForecast;
+export default WeatherCard;
